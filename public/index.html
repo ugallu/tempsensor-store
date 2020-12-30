@@ -1,0 +1,31 @@
+<head>
+  <!-- Load plotly.js into the DOM -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+    $.ajax({
+      url: "/temp",
+      type: "GET",
+      dataType: "json", // added data type
+      success: function (res) {
+        data = JSON.parse(res);
+        let dates = data.map((x) => x.datetime);
+        let values = data.map((x) => x.temp);
+
+        var temps = {
+          x: dates,
+          y: values,
+          type: "scatter",
+        };
+
+        var data = [temps];
+
+        Plotly.newPlot("myDiv", data);
+      },
+    });
+  </script>
+</body>
